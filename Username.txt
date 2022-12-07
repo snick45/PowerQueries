@@ -1,4 +1,4 @@
-/*This query will return the username of the person running this query in Windows.
+/*This query will return the username of the person running this query in Windows. Not sure if it will work on Mac.
 This is particularly useful for referring to OneDrive folders, as those paths contain your username.*/
 let
     Source = Folder.Contents("C:\Users"),
