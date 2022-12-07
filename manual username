@@ -1,0 +1,12 @@
+/*This query will return the username of the person running this query in Windows.
+This is particularly useful for referring to OneDrive folders, as those paths contain your username.*/
+let
+    Source = Folder.Contents("C:\Users"),
+    ExAttributes = Table.ExpandRecordColumn(Source, "Attributes", {"Hidden", "Directory", "ChangeTime"}, {"Hidden", "Directory", "ChangeTime"}),
+    //Removing non-user folders mostly.
+    RemErr = Table.RemoveRowsWithErrors(ExAttributes, {"ChangeTime"}),
+    //Filtering down to just the current user.
+    Filter = Table.SelectRows(RemErr, each [Directory] = true and [Name] <> "Public" and [Hidden] = false),
+    DrillDown = Filter{0}[Name]
+in
+    DrillDownd
